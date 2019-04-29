@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@stdlib/stdlib": "0.0.60",
     "apache-arrow": "^0.13.0"
   },
   "devDependencies": {},

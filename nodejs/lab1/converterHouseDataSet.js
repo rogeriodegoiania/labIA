@@ -1,5 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const ApacheArrow = require('apache-arrow');
+
+//https://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data
 
 /*
 1. CRIM      per capita crime rate by town
@@ -20,8 +23,8 @@ const ApacheArrow = require('apache-arrow');
 
 //0.00632  18.00   2.310  0  0.5380  6.5750  65.20  4.0900   1  296.0  15.30 396.90   4.98  24.00
 
-var colunas = [[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
-var linhas = fs.readFileSync('../../dados/housing.data').toString().split("\n").forEach(function(linha){
+var colunas = Array(14).fill([]);
+var linhas = fs.readFileSync(path.join(__dirname, '../../dados/housing.data')).toString().split("\n").forEach(function(linha){
     let valores = linha.split("  ");
     for (var j=0; j< valores.length; j++){
         colunas[j].push(valores[j]);
@@ -47,6 +50,6 @@ esquema.MEDV = ApacheArrow.Float32Vector.from(colunas[13]);
 
 const table = ApacheArrow.Table.new(esquema);
 
-fs.writeFileSync("../../dados/housing.arrow", table.serialize());
+fs.writeFileSync(path.join(__dirname, '../../dados/housing.arrow'), table.serialize());
 
 console.log("convertido " + table.count() + " linhas");
